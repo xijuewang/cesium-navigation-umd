@@ -6,6 +6,176 @@
 
   var Cesium = window.Cesium;
 
+  var toString = {}.toString;
+
+  var _cof = function (it) {
+    return toString.call(it).slice(8, -1);
+  };
+
+  var _cof$1 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    'default': _cof,
+    __moduleExports: _cof
+  });
+
+  function createCommonjsModule(fn, module) {
+  	return module = { exports: {} }, fn(module, module.exports), module.exports;
+  }
+
+  var _core = createCommonjsModule(function (module) {
+  var core = module.exports = { version: '2.6.12' };
+  if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
+  });
+  var _core_1 = _core.version;
+
+  var _core$1 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    'default': _core,
+    __moduleExports: _core,
+    version: _core_1
+  });
+
+  var _global = createCommonjsModule(function (module) {
+  // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
+  var global = module.exports = typeof window != 'undefined' && window.Math == Math
+    ? window : typeof self != 'undefined' && self.Math == Math ? self
+    // eslint-disable-next-line no-new-func
+    : Function('return this')();
+  if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
+  });
+
+  var _global$1 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    'default': _global,
+    __moduleExports: _global
+  });
+
+  var _library = false;
+
+  var _library$1 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    'default': _library,
+    __moduleExports: _library
+  });
+
+  var core = ( _core$1 && _core ) || _core$1;
+
+  var require$$0 = ( _global$1 && _global ) || _global$1;
+
+  var require$$0$1 = ( _library$1 && _library ) || _library$1;
+
+  var _shared = createCommonjsModule(function (module) {
+  var SHARED = '__core-js_shared__';
+  var store = require$$0[SHARED] || (require$$0[SHARED] = {});
+
+  (module.exports = function (key, value) {
+    return store[key] || (store[key] = value !== undefined ? value : {});
+  })('versions', []).push({
+    version: core.version,
+    mode: require$$0$1 ? 'pure' : 'global',
+    copyright: '© 2020 Denis Pushkarev (zloirock.ru)'
+  });
+  });
+
+  var _shared$1 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    'default': _shared,
+    __moduleExports: _shared
+  });
+
+  var id = 0;
+  var px = Math.random();
+  var _uid = function (key) {
+    return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
+  };
+
+  var _uid$1 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    'default': _uid,
+    __moduleExports: _uid
+  });
+
+  var require$$0$2 = ( _shared$1 && _shared ) || _shared$1;
+
+  var uid = ( _uid$1 && _uid ) || _uid$1;
+
+  var _wks = createCommonjsModule(function (module) {
+  var store = require$$0$2('wks');
+
+  var Symbol = require$$0.Symbol;
+  var USE_SYMBOL = typeof Symbol == 'function';
+
+  var $exports = module.exports = function (name) {
+    return store[name] || (store[name] =
+      USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
+  };
+
+  $exports.store = store;
+  });
+
+  var _wks$1 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    'default': _wks,
+    __moduleExports: _wks
+  });
+
+  var cof = ( _cof$1 && _cof ) || _cof$1;
+
+  var require$$0$3 = ( _wks$1 && _wks ) || _wks$1;
+
+  // getting tag from 19.1.3.6 Object.prototype.toString()
+
+  var TAG = require$$0$3('toStringTag');
+  // ES3 wrong here
+  var ARG = cof(function () { return arguments; }()) == 'Arguments';
+
+  // fallback for IE11 Script Access Denied error
+  var tryGet = function (it, key) {
+    try {
+      return it[key];
+    } catch (e) { /* empty */ }
+  };
+
+  var _classof = function (it) {
+    var O, T, B;
+    return it === undefined ? 'Undefined' : it === null ? 'Null'
+      // @@toStringTag case
+      : typeof (T = tryGet(O = Object(it), TAG)) == 'string' ? T
+      // builtinTag case
+      : ARG ? cof(O)
+      // ES3 arguments fallback
+      : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
+  };
+
+  var _classof$1 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    'default': _classof,
+    __moduleExports: _classof
+  });
+
+  var _isObject = function (it) {
+    return typeof it === 'object' ? it !== null : typeof it === 'function';
+  };
+
+  var _isObject$1 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    'default': _isObject,
+    __moduleExports: _isObject
+  });
+
+  var isObject = ( _isObject$1 && _isObject ) || _isObject$1;
+
+  var _anObject = function (it) {
+    if (!isObject(it)) throw TypeError(it + ' is not an object!');
+    return it;
+  };
+
+  var _anObject$1 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    'default': _anObject,
+    __moduleExports: _anObject
+  });
+
   var _fails = function (exec) {
     try {
       return !!exec();
@@ -33,50 +203,6 @@
     __moduleExports: _descriptors
   });
 
-  var _isObject = function (it) {
-    return typeof it === 'object' ? it !== null : typeof it === 'function';
-  };
-
-  var _isObject$1 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    'default': _isObject,
-    __moduleExports: _isObject
-  });
-
-  var isObject = ( _isObject$1 && _isObject ) || _isObject$1;
-
-  var _anObject = function (it) {
-    if (!isObject(it)) throw TypeError(it + ' is not an object!');
-    return it;
-  };
-
-  var _anObject$1 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    'default': _anObject,
-    __moduleExports: _anObject
-  });
-
-  function createCommonjsModule(fn, module) {
-  	return module = { exports: {} }, fn(module, module.exports), module.exports;
-  }
-
-  var _global = createCommonjsModule(function (module) {
-  // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
-  var global = module.exports = typeof window != 'undefined' && window.Math == Math
-    ? window : typeof self != 'undefined' && self.Math == Math ? self
-    // eslint-disable-next-line no-new-func
-    : Function('return this')();
-  if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
-  });
-
-  var _global$1 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    'default': _global,
-    __moduleExports: _global
-  });
-
-  var require$$0 = ( _global$1 && _global ) || _global$1;
-
   var document$1 = require$$0.document;
   // typeof document.createElement is 'object' in old IE
   var is = isObject(document$1) && isObject(document$1.createElement);
@@ -90,12 +216,12 @@
     __moduleExports: _domCreate
   });
 
-  var require$$1 = ( _descriptors$1 && _descriptors ) || _descriptors$1;
+  var require$$0$4 = ( _descriptors$1 && _descriptors ) || _descriptors$1;
 
-  var require$$1$1 = ( _domCreate$1 && _domCreate ) || _domCreate$1;
+  var require$$1 = ( _domCreate$1 && _domCreate ) || _domCreate$1;
 
-  var _ie8DomDefine = !require$$1 && !require$$2(function () {
-    return Object.defineProperty(require$$1$1('div'), 'a', { get: function () { return 7; } }).a != 7;
+  var _ie8DomDefine = !require$$0$4 && !require$$2(function () {
+    return Object.defineProperty(require$$1('div'), 'a', { get: function () { return 7; } }).a != 7;
   });
 
   var _ie8DomDefine$1 = /*#__PURE__*/Object.freeze({
@@ -131,7 +257,7 @@
 
   var dP = Object.defineProperty;
 
-  var f = require$$1 ? Object.defineProperty : function defineProperty(O, P, Attributes) {
+  var f = require$$0$4 ? Object.defineProperty : function defineProperty(O, P, Attributes) {
     anObject(O);
     P = toPrimitive(P, true);
     anObject(Attributes);
@@ -154,35 +280,6 @@
     f: f
   });
 
-  // 21.2.5.3 get RegExp.prototype.flags
-
-  var _flags = function () {
-    var that = anObject(this);
-    var result = '';
-    if (that.global) result += 'g';
-    if (that.ignoreCase) result += 'i';
-    if (that.multiline) result += 'm';
-    if (that.unicode) result += 'u';
-    if (that.sticky) result += 'y';
-    return result;
-  };
-
-  var _flags$1 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    'default': _flags,
-    __moduleExports: _flags
-  });
-
-  var require$$0$1 = ( _objectDp$1 && _objectDp ) || _objectDp$1;
-
-  var $flags = ( _flags$1 && _flags ) || _flags$1;
-
-  // 21.2.5.3 get RegExp.prototype.flags()
-  if (require$$1 && /./g.flags != 'g') require$$0$1.f(RegExp.prototype, 'flags', {
-    configurable: true,
-    get: $flags
-  });
-
   var _propertyDesc = function (bitmap, value) {
     return {
       enumerable: !(bitmap & 1),
@@ -198,10 +295,12 @@
     __moduleExports: _propertyDesc
   });
 
+  var dP$1 = ( _objectDp$1 && _objectDp ) || _objectDp$1;
+
   var createDesc = ( _propertyDesc$1 && _propertyDesc ) || _propertyDesc$1;
 
-  var _hide = require$$1 ? function (object, key, value) {
-    return require$$0$1.f(object, key, createDesc(1, value));
+  var _hide = require$$0$4 ? function (object, key, value) {
+    return dP$1.f(object, key, createDesc(1, value));
   } : function (object, key, value) {
     object[key] = value;
     return object;
@@ -224,65 +323,7 @@
     __moduleExports: _has
   });
 
-  var id = 0;
-  var px = Math.random();
-  var _uid = function (key) {
-    return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
-  };
-
-  var _uid$1 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    'default': _uid,
-    __moduleExports: _uid
-  });
-
-  var _core = createCommonjsModule(function (module) {
-  var core = module.exports = { version: '2.6.11' };
-  if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
-  });
-  var _core_1 = _core.version;
-
-  var _core$1 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    'default': _core,
-    __moduleExports: _core,
-    version: _core_1
-  });
-
-  var _library = false;
-
-  var _library$1 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    'default': _library,
-    __moduleExports: _library
-  });
-
-  var core = ( _core$1 && _core ) || _core$1;
-
-  var require$$0$2 = ( _library$1 && _library ) || _library$1;
-
-  var _shared = createCommonjsModule(function (module) {
-  var SHARED = '__core-js_shared__';
-  var store = require$$0[SHARED] || (require$$0[SHARED] = {});
-
-  (module.exports = function (key, value) {
-    return store[key] || (store[key] = value !== undefined ? value : {});
-  })('versions', []).push({
-    version: core.version,
-    mode: require$$0$2 ? 'pure' : 'global',
-    copyright: '© 2019 Denis Pushkarev (zloirock.ru)'
-  });
-  });
-
-  var _shared$1 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    'default': _shared,
-    __moduleExports: _shared
-  });
-
-  var require$$0$3 = ( _shared$1 && _shared ) || _shared$1;
-
-  var _functionToString = require$$0$3('native-function-to-string', Function.toString);
+  var _functionToString = require$$0$2('native-function-to-string', Function.toString);
 
   var _functionToString$1 = /*#__PURE__*/Object.freeze({
     __proto__: null,
@@ -293,8 +334,6 @@
   var hide = ( _hide$1 && _hide ) || _hide$1;
 
   var has = ( _has$1 && _has ) || _has$1;
-
-  var uid = ( _uid$1 && _uid ) || _uid$1;
 
   var $toString = ( _functionToString$1 && _functionToString ) || _functionToString$1;
 
@@ -335,118 +374,79 @@
     __moduleExports: _redefine
   });
 
-  var redefine = ( _redefine$1 && _redefine ) || _redefine$1;
-
-  var TO_STRING = 'toString';
-  var $toString$1 = /./[TO_STRING];
-
-  var define = function (fn) {
-    redefine(RegExp.prototype, TO_STRING, fn, true);
-  };
-
-  // 21.2.5.14 RegExp.prototype.toString()
-  if (require$$2(function () { return $toString$1.call({ source: 'a', flags: 'b' }) != '/a/b'; })) {
-    define(function toString() {
-      var R = anObject(this);
-      return '/'.concat(R.source, '/',
-        'flags' in R ? R.flags : !require$$1 && R instanceof RegExp ? $flags.call(R) : undefined);
-    });
-  // FF44- RegExp#toString has a wrong name
-  } else if ($toString$1.name != TO_STRING) {
-    define(function toString() {
-      return $toString$1.call(this);
-    });
-  }
-
-  var DateProto = Date.prototype;
-  var INVALID_DATE = 'Invalid Date';
-  var TO_STRING$1 = 'toString';
-  var $toString$2 = DateProto[TO_STRING$1];
-  var getTime = DateProto.getTime;
-  if (new Date(NaN) + '' != INVALID_DATE) {
-    redefine(DateProto, TO_STRING$1, function toString() {
-      var value = getTime.call(this);
-      // eslint-disable-next-line no-self-compare
-      return value === value ? $toString$2.call(this) : INVALID_DATE;
-    });
-  }
-
-  var toString = {}.toString;
-
-  var _cof = function (it) {
-    return toString.call(it).slice(8, -1);
-  };
-
-  var _cof$1 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    'default': _cof,
-    __moduleExports: _cof
-  });
-
-  var _wks = createCommonjsModule(function (module) {
-  var store = require$$0$3('wks');
-
-  var Symbol = require$$0.Symbol;
-  var USE_SYMBOL = typeof Symbol == 'function';
-
-  var $exports = module.exports = function (name) {
-    return store[name] || (store[name] =
-      USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
-  };
-
-  $exports.store = store;
-  });
-
-  var _wks$1 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    'default': _wks,
-    __moduleExports: _wks
-  });
-
-  var cof = ( _cof$1 && _cof ) || _cof$1;
-
-  var require$$0$4 = ( _wks$1 && _wks ) || _wks$1;
-
-  // getting tag from 19.1.3.6 Object.prototype.toString()
-
-  var TAG = require$$0$4('toStringTag');
-  // ES3 wrong here
-  var ARG = cof(function () { return arguments; }()) == 'Arguments';
-
-  // fallback for IE11 Script Access Denied error
-  var tryGet = function (it, key) {
-    try {
-      return it[key];
-    } catch (e) { /* empty */ }
-  };
-
-  var _classof = function (it) {
-    var O, T, B;
-    return it === undefined ? 'Undefined' : it === null ? 'Null'
-      // @@toStringTag case
-      : typeof (T = tryGet(O = Object(it), TAG)) == 'string' ? T
-      // builtinTag case
-      : ARG ? cof(O)
-      // ES3 arguments fallback
-      : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
-  };
-
-  var _classof$1 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    'default': _classof,
-    __moduleExports: _classof
-  });
-
   var classof = ( _classof$1 && _classof ) || _classof$1;
+
+  var redefine = ( _redefine$1 && _redefine ) || _redefine$1;
 
   // 19.1.3.6 Object.prototype.toString()
 
   var test = {};
-  test[require$$0$4('toStringTag')] = 'z';
+  test[require$$0$3('toStringTag')] = 'z';
   if (test + '' != '[object z]') {
     redefine(Object.prototype, 'toString', function toString() {
       return '[object ' + classof(this) + ']';
     }, true);
+  }
+
+  var DateProto = Date.prototype;
+  var INVALID_DATE = 'Invalid Date';
+  var TO_STRING = 'toString';
+  var $toString$1 = DateProto[TO_STRING];
+  var getTime = DateProto.getTime;
+  if (new Date(NaN) + '' != INVALID_DATE) {
+    redefine(DateProto, TO_STRING, function toString() {
+      var value = getTime.call(this);
+      // eslint-disable-next-line no-self-compare
+      return value === value ? $toString$1.call(this) : INVALID_DATE;
+    });
+  }
+
+  // 21.2.5.3 get RegExp.prototype.flags
+
+  var _flags = function () {
+    var that = anObject(this);
+    var result = '';
+    if (that.global) result += 'g';
+    if (that.ignoreCase) result += 'i';
+    if (that.multiline) result += 'm';
+    if (that.unicode) result += 'u';
+    if (that.sticky) result += 'y';
+    return result;
+  };
+
+  var _flags$1 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    'default': _flags,
+    __moduleExports: _flags
+  });
+
+  var $flags = ( _flags$1 && _flags ) || _flags$1;
+
+  // 21.2.5.3 get RegExp.prototype.flags()
+  if (require$$0$4 && /./g.flags != 'g') dP$1.f(RegExp.prototype, 'flags', {
+    configurable: true,
+    get: $flags
+  });
+
+  var TO_STRING$1 = 'toString';
+  var $toString$2 = /./[TO_STRING$1];
+
+  var define = function (fn) {
+    redefine(RegExp.prototype, TO_STRING$1, fn, true);
+  };
+
+  // 21.2.5.14 RegExp.prototype.toString()
+  if (require$$2(function () { return $toString$2.call({ source: 'a', flags: 'b' }) != '/a/b'; })) {
+    define(function toString() {
+      var R = anObject(this);
+      return '/'.concat(R.source, '/',
+        'flags' in R ? R.flags : !require$$0$4 && R instanceof RegExp ? $flags.call(R) : undefined);
+    });
+  // FF44- RegExp#toString has a wrong name
+  } else if ($toString$2.name != TO_STRING$1) {
+    define(function toString() {
+      return $toString$2.call(this);
+    });
   }
 
   var createFragmentFromTemplate = function createFragmentFromTemplate(htmlString) {
@@ -629,6 +629,23 @@
       viewModel.distanceLabel = undefined;
     }
   }
+
+  var dP$2 = dP$1.f;
+  var FProto = Function.prototype;
+  var nameRE = /^\s*function ([^ (]*)/;
+  var NAME = 'name';
+
+  // 19.2.4.2 name
+  NAME in FProto || require$$0$4 && dP$2(FProto, NAME, {
+    configurable: true,
+    get: function () {
+      try {
+        return ('' + this).match(nameRE)[1];
+      } catch (e) {
+        return '';
+      }
+    }
+  });
 
   var _aFunction = function (it) {
     if (typeof it != 'function') throw TypeError(it + ' is not a function!');
@@ -836,7 +853,7 @@
     __moduleExports: _arrayIncludes
   });
 
-  var shared = require$$0$3('keys');
+  var shared = require$$0$2('keys');
 
   var _sharedKey = function (key) {
     return shared[key] || (shared[key] = uid(key));
@@ -905,13 +922,13 @@
 
   var getKeys = ( _objectKeys$1 && _objectKeys ) || _objectKeys$1;
 
-  var _objectDps = require$$1 ? Object.defineProperties : function defineProperties(O, Properties) {
+  var _objectDps = require$$0$4 ? Object.defineProperties : function defineProperties(O, Properties) {
     anObject(O);
     var keys = getKeys(Properties);
     var length = keys.length;
     var i = 0;
     var P;
-    while (length > i) require$$0$1.f(O, P = keys[i++], Properties[P]);
+    while (length > i) dP$1.f(O, P = keys[i++], Properties[P]);
     return O;
   };
 
@@ -930,7 +947,7 @@
     __moduleExports: _html
   });
 
-  var dPs = ( _objectDps$1 && _objectDps ) || _objectDps$1;
+  var require$$1$1 = ( _objectDps$1 && _objectDps ) || _objectDps$1;
 
   var require$$2$1 = ( _html$1 && _html ) || _html$1;
 
@@ -945,7 +962,7 @@
   // Create object with fake `null` prototype: use iframe Object with cleared prototype
   var createDict = function () {
     // Thrash, waste and sodomy: IE GC bug
-    var iframe = require$$1$1('iframe');
+    var iframe = require$$1('iframe');
     var i = enumBugKeys.length;
     var lt = '<';
     var gt = '>';
@@ -973,7 +990,7 @@
       // add "__proto__" for Object.getPrototypeOf polyfill
       result[IE_PROTO$1] = O;
     } else result = createDict();
-    return Properties === undefined ? result : dPs(result, Properties);
+    return Properties === undefined ? result : require$$1$1(result, Properties);
   };
 
   var _objectCreate$1 = /*#__PURE__*/Object.freeze({
@@ -989,24 +1006,10 @@
   // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
   $export$1($export$1.S, 'Object', { create: require$$0$7 });
 
-  var dP$1 = require$$0$1.f;
-  var FProto = Function.prototype;
-  var nameRE = /^\s*function ([^ (]*)/;
-  var NAME = 'name';
-
-  // 19.2.4.2 name
-  NAME in FProto || require$$1 && dP$1(FProto, NAME, {
-    configurable: true,
-    get: function () {
-      try {
-        return ('' + this).match(nameRE)[1];
-      } catch (e) {
-        return '';
-      }
-    }
-  });
-
   var svgReset = 'M 7.5,0 C 3.375,0 0,3.375 0,7.5 0,11.625 3.375,15 7.5,15 c 3.46875,0 6.375,-2.4375 7.21875,-5.625 l -1.96875,0 C 12,11.53125 9.9375,13.125 7.5,13.125 4.40625,13.125 1.875,10.59375 1.875,7.5 1.875,4.40625 4.40625,1.875 7.5,1.875 c 1.59375,0 2.90625,0.65625 3.9375,1.6875 l -3,3 6.5625,0 L 15,0 12.75,2.25 C 11.4375,0.84375 9.5625,0 7.5,0 z';
+
+  // 19.1.2.3 / 15.2.3.7 Object.defineProperties(O, Properties)
+  $export$1($export$1.S + $export$1.F * !require$$0$4, 'Object', { defineProperties: require$$1$1 });
 
   var defined$2 = Cesium.defined;
   var defineProperties = Cesium.defineProperties;
@@ -1076,7 +1079,7 @@
     Knockout$2.track(this, ['name', 'svgIcon', 'svgHeight', 'svgWidth', 'cssClass', 'isActive']);
   };
 
-  defineProperties(UserInterfaceControl.prototype, {
+  Object.defineProperties(UserInterfaceControl.prototype, {
     /**
      * Gets the Terria instance.
      * @memberOf UserInterfaceControl.prototype
